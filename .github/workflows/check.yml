@@ -1,0 +1,39 @@
+name: Check Userscript
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  syntax:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: JS syntax check
+        run: node --check media-sniffer.user.js
+
+      - name: Validate userscript metadata
+        run: |
+          set -e
+          head -n 25 media-sniffer.user.js | grep -q '==UserScript=='
+          head -n 25 media-sniffer.user.js | grep -q '==/UserScript=='
+          head -n 25 media-sniffer.user.js | grep -q '@name'
+          head -n 25 media-sniffer.user.js | grep -q '@version'
+          head -n 25 media-sniffer.user.js | grep -q '@match'
+          echo "Metadata OK"
+
+      - name: Ensure update URL points to this repo
+        run: |
+          set -e
+          grep -q 'raw.githubusercontent.com/songdongze/media-sniffer/main/media-sniffer.user.js' media-sniffer.user.js
+          echo "Update URL OK"

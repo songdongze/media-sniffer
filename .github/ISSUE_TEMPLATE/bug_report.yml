@@ -1,0 +1,102 @@
+name: 🐛 Bug 反馈
+description: 脚本没抓到资源、面板异常、误报或下载失败
+title: "[Bug] "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        感谢反馈！提交前请先确认：
+
+        - 脚本管理器里本脚本处于「已启用」，且当前网址命中 `*://*/*`
+        - 已播放视频 / 滚动页面，排除资源尚未懒加载的情况
+        - 不是站点防盗链或登录态问题（见 [README 常见问题](https://github.com/songdongze/media-sniffer#-常见问题)）
+
+        ⚠️ 请勿粘贴包含账号、Cookie、Token 或签名参数的链接与日志。
+
+  - type: input
+    id: site
+    attributes:
+      label: 出问题的网页地址
+      description: 完整 URL；若需登录，写「域名 + 页面类型」即可
+      placeholder: https://example.com/watch/123
+    validations:
+      required: true
+
+  - type: dropdown
+    id: manager
+    attributes:
+      label: 脚本管理器
+      options:
+        - Tampermonkey（篡改猴）
+        - Violentmonkey（暴力猴）
+        - Greasemonkey
+        - 其他 / 不确定
+    validations:
+      required: true
+
+  - type: input
+    id: versions
+    attributes:
+      label: 版本信息
+      description: 浏览器版本 + 脚本管理器版本 + 脚本版本（脚本头部 @version）
+      placeholder: Edge 131 / Tampermonkey 5.3 / 1.0.0
+    validations:
+      required: true
+
+  - type: dropdown
+    id: kind
+    attributes:
+      label: 涉及的资源类型
+      options:
+        - 视频 / m3u8 / mpd
+        - 音频
+        - 图片
+        - 面板与交互
+        - 其他
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: 期望发生什么
+      placeholder: 应该能在「视频」页签里看到这个 mp4 链接
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: 实际发生什么
+      placeholder: 角标一直是 0 / 面板打不开 / 下载 403 …
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: 复现步骤
+      description: 一步一步写，方便我照着复现
+      placeholder: |
+        1. 打开 …
+        2. 点击播放 …
+        3. 按 Alt+S …
+      render: shell
+
+  - type: textarea
+    id: console
+    attributes:
+      label: 控制台报错（可选）
+      description: F12 → Console 里的相关报错，请先脱敏
+      render: shell
+
+  - type: checkboxes
+    id: confirm
+    attributes:
+      label: 确认
+      options:
+        - label: 我已看过 README 的常见问题，且已排除防盗链 / 登录态因素
+          required: true
+        - label: 提交内容不含账号、Cookie、Token 或带签名的链接
+          required: true

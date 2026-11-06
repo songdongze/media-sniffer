@@ -1,5 +1,7 @@
 # 🎯 资源嗅探器 · Media Sniffer
 
+[![Check Userscript](https://github.com/songdongze/media-sniffer/actions/workflows/check.yml/badge.svg)](https://github.com/songdongze/media-sniffer/actions/workflows/check.yml) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE) [![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)](https://github.com/songdongze/media-sniffer/releases) [![安装页](https://img.shields.io/badge/安装页-online-3fb950)](https://songdongze.github.io/media-sniffer/)
+
 一个纯前端运行的油猴（Userscript）脚本，自动嗅探当前网页里的 **视频 / 音频 / 图片** 资源，并提供分类、搜索、预览、复制链接、下载和批量导出。
 
 > 所有逻辑都在你的浏览器里本地执行，**不上传、不统计、不回传任何数据**。
@@ -90,6 +92,8 @@ iframe 汇总   ─┘   postMessage 桥接
 - 只 hook 了 `fetch` / `XHR.open` / `XHR.send` / `URL.createObjectURL`，且都原样调用原函数，不改变请求结果。
 - 面板使用 `textContent` 渲染链接，避免页面内容造成 XSS。
 
+完整说明见 [SECURITY.md](./SECURITY.md)。
+
 ---
 
 ## ❓ 常见问题
@@ -121,12 +125,20 @@ iframe 汇总   ─┘   postMessage 桥接
 
 ```
 media-sniffer/
-├── media-sniffer.user.js        # 油猴脚本本体
-├── index.html                   # GitHub Pages 安装页
-├── README.md                    # 本文档
-├── LICENSE                      # MIT
-├── .gitignore
-└── .github/workflows/check.yml  # 推送时自动做 JS 语法校验
+├── media-sniffer.user.js          # 油猴脚本本体
+├── index.html                     # GitHub Pages 安装页
+├── README.md                      # 本文档
+├── CHANGELOG.md                   # 版本变更记录
+├── CONTRIBUTING.md                # 贡献指南
+├── SECURITY.md                    # 安全政策
+├── CODE_OF_CONDUCT.md             # 行为准则
+├── LICENSE                        # MIT
+├── .editorconfig / .gitignore
+└── .github/
+    ├── workflows/check.yml        # 推送时自动做 JS 语法校验
+    ├── dependabot.yml             # Actions 依赖月度更新
+    ├── ISSUE_TEMPLATE/            # 结构化 Bug / 建议表单 + 入口配置
+    └── PULL_REQUEST_TEMPLATE.md   # PR 检查清单
 ```
 
 ## 🛠 本地校验
@@ -134,6 +146,16 @@ media-sniffer/
 ```bash
 node --check media-sniffer.user.js
 ```
+
+## 🤝 参与贡献
+
+欢迎提 PR 或反馈问题，常用入口：
+
+- [贡献指南](./CONTRIBUTING.md) — 代码约定、常见改动位置、提交规范
+- [更新日志](./CHANGELOG.md) — 各版本改了什么
+- [安全政策](./SECURITY.md) — 漏洞请私密报告，不要公开提 Issue
+- [行为准则](./CODE_OF_CONDUCT.md)
+- [🐛 提 Bug / 提建议](https://github.com/songdongze/media-sniffer/issues/new/choose) · [💬 讨论区](https://github.com/songdongze/media-sniffer/discussions)
 
 ## 📄 许可
 

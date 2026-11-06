@@ -1,0 +1,56 @@
+name: ✨ 功能建议
+description: 想支持新格式、新嗅探来源，或改进面板体验
+title: "[Feature] "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        欢迎提想法！请尽量写清使用场景，越具体越容易落地。
+
+        本项目的三条底线：**单文件、零外部依赖、零数据上报**。涉及引入第三方库、联网请求或改变页面原有行为的建议，通常不会被采纳。
+
+  - type: textarea
+    id: scenario
+    attributes:
+      label: 使用场景
+      description: 在哪个网站、想抓什么资源、现在卡在哪一步
+      placeholder: 在某视频站想把封面图和音频一起导出，但封面走的是 CSS 背景 + 懒加载…
+    validations:
+      required: true
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: 大致属于哪一块
+      options:
+        - 新增媒体格式 / 识别规则
+        - 新增嗅探来源
+        - 面板交互与样式
+        - 下载与导出
+        - 性能与兼容性
+        - 其他
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: 期望的行为
+      description: 说清楚「改完之后会发生什么」
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: 你现在是怎么绕过的（可选）
+      description: 临时方案、其他脚本 / 工具的做法
+
+  - type: checkboxes
+    id: confirm
+    attributes:
+      label: 确认
+      options:
+        - label: 这个建议不需要引入外部依赖，也不会新增任何数据上报
+          required: true

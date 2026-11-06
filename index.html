@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>资源嗅探器 · Media Sniffer</title>
+<meta name="description" content="一键嗅探网页里的视频、音频、图片资源。纯本地运行的油猴脚本。">
+<style>
+  :root{
+    --bg:#0d1117;--panel:#161b22;--border:#30363d;--text:#e6edf3;
+    --muted:#8b949e;--accent:#58a6ff;--accent-bg:#1f6feb;--green:#3fb950;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    background:var(--bg);color:var(--text);min-height:100vh;
+    font:15px/1.7 -apple-system,BlinkMacSystemFont,"Segoe UI","Microsoft YaHei",sans-serif;
+    background-image:radial-gradient(ellipse 700px 400px at 50% -100px,rgba(31,111,235,.16),transparent);
+  }
+  .wrap{max-width:860px;margin:0 auto;padding:64px 24px 80px}
+  .hero{text-align:center;margin-bottom:48px}
+  .logo{
+    display:inline-flex;align-items:center;justify-content:center;
+    width:76px;height:76px;border-radius:20px;font-size:38px;
+    background:var(--panel);border:1px solid var(--border);
+    box-shadow:0 12px 40px rgba(0,0,0,.5);margin-bottom:22px;
+  }
+  h1{font-size:36px;letter-spacing:-.5px;margin-bottom:10px}
+  .sub{color:var(--muted);font-size:17px;max-width:560px;margin:0 auto}
+  .badges{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:20px}
+  .badge{
+    font-size:12px;color:var(--muted);border:1px solid var(--border);
+    background:var(--panel);border-radius:999px;padding:4px 12px;
+  }
+  .install{
+    background:var(--panel);border:1px solid var(--border);border-radius:16px;
+    padding:28px;text-align:center;margin-bottom:40px;
+  }
+  .install h2{font-size:18px;margin-bottom:8px}
+  .install p{color:var(--muted);font-size:14px;margin-bottom:22px}
+  .btn{
+    display:inline-block;background:var(--accent-bg);color:#fff;text-decoration:none;
+    font-weight:600;font-size:16px;padding:13px 34px;border-radius:10px;
+    transition:transform .15s,filter .15s;
+  }
+  .btn:hover{filter:brightness(1.12);transform:translateY(-2px)}
+  .btn.secondary{
+    background:transparent;border:1px solid var(--border);color:var(--text);
+    font-size:14px;padding:11px 22px;margin-left:10px;font-weight:400;
+  }
+  .note{
+    margin-top:18px;font-size:13px;color:var(--muted);
+    border-top:1px solid var(--border);padding-top:18px;
+  }
+  .note a{color:var(--accent);text-decoration:none}
+  .note a:hover{text-decoration:underline}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px;margin-bottom:40px}
+  .card{
+    background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:20px;
+  }
+  .card .ico{font-size:22px;margin-bottom:10px}
+  .card h3{font-size:15px;margin-bottom:6px}
+  .card p{font-size:13px;color:var(--muted);line-height:1.65}
+  .steps{counter-reset:s;list-style:none;margin-bottom:40px}
+  .steps li{
+    position:relative;padding:0 0 22px 44px;border-left:1px solid var(--border);margin-left:14px;
+  }
+  .steps li:last-child{border-left-color:transparent;padding-bottom:0}
+  .steps li::before{
+    counter-increment:s;content:counter(s);position:absolute;left:-14px;top:0;
+    width:28px;height:28px;border-radius:50%;background:var(--panel);
+    border:1px solid var(--border);color:var(--accent);
+    display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;
+  }
+  .steps strong{display:block;font-size:15px;margin-bottom:3px}
+  .steps span{color:var(--muted);font-size:13px}
+  code{
+    background:#21262d;border:1px solid var(--border);border-radius:5px;
+    padding:2px 6px;font-size:12px;color:var(--green);
+  }
+  footer{
+    border-top:1px solid var(--border);padding-top:22px;text-align:center;
+    color:var(--muted);font-size:13px;
+  }
+  footer a{color:var(--accent);text-decoration:none;margin:0 8px}
+  footer a:hover{text-decoration:underline}
+  @media(max-width:520px){
+    .wrap{padding:40px 16px 60px}h1{font-size:28px}
+    .btn.secondary{display:block;margin:12px auto 0;max-width:220px}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="hero">
+    <div class="logo">🎯</div>
+    <h1>资源嗅探器</h1>
+    <p class="sub">自动嗅探当前网页里的视频、音频、图片资源，一键预览、复制与下载。纯本地运行，不上传任何数据。</p>
+    <div class="badges">
+      <span class="badge">Tampermonkey / Violentmonkey</span>
+      <span class="badge">MIT 开源</span>
+      <span class="badge">零数据上报</span>
+      <span class="badge">v1.0.0</span>
+    </div>
+  </div>
+
+  <section class="install">
+    <h2>🚀 一键安装</h2>
+    <p>先装好脚本管理器，再点下面的按钮，脚本管理器会弹出安装确认。</p>
+    <a class="btn" href="https://raw.githubusercontent.com/songdongze/media-sniffer/main/media-sniffer.user.js">安装 media-sniffer.user.js</a>
+    <a class="btn secondary" href="https://github.com/songdongze/media-sniffer">查看源码</a>
+    <div class="note">
+      还没装脚本管理器？
+      <a href="https://microsoftedge.microsoft.com/addons/detail/tampermonkey/iikmkjmpaadaobahmlepeloendndfphd" target="_blank" rel="noopener">Edge 安装 Tampermonkey</a> ·
+      <a href="https://microsoftedge.microsoft.com/addons/detail/violentmonkey/eeagobfjdenkkddmbcliamhepcepdkf" target="_blank" rel="noopener">或 Violentmonkey</a>
+    </div>
+  </section>
+
+  <div class="grid">
+    <div class="card"><div class="ico">🎬</div><h3>视频 / 流媒体</h3><p>mp4、webm、mkv、ts、m3u8、mpd 等，接口里藏着的播放地址也能挖出来。</p></div>
+    <div class="card"><div class="ico">🎵</div><h3>音频</h3><p>mp3、m4a、flac、aac、ogg、wav 等，支持直接在线试听。</p></div>
+    <div class="card"><div class="ico">🖼️</div><h3>图片</h3><p>jpg、png、webp、gif、svg、avif，含懒加载图与 CSS 背景图，带缩略图预览。</p></div>
+    <div class="card"><div class="ico">🔍</div><h3>分类与搜索</h3><p>实时角标计数，按类型切换、按文件名或链接过滤，批量复制与导出 JSON。</p></div>
+    <div class="card"><div class="ico">🧩</div><h3>iframe 汇总</h3><p>嵌套页面里的资源自动上报到主面板，不会因为跨框架而漏掉。</p></div>
+    <div class="card"><div class="ico">🔒</div><h3>隐私优先</h3><p>无埋点、无远程代码、无数据回传。Shadow DOM 隔离，不干扰原网页样式。</p></div>
+  </div>
+
+  <ol class="steps">
+    <li><strong>安装脚本管理器</strong><span>在 Edge 扩展商店安装 Tampermonkey 或 Violentmonkey，并保持启用。</span></li>
+    <li><strong>点上面的「一键安装」</strong><span>确认页里核对权限后点安装，脚本会自动通过仓库更新。</span></li>
+    <li><strong>打开任意含媒体资源的网页</strong><span>播放视频、滚动页面或点开图片，右下角 🎯 角标就会开始跳动。</span></li>
+    <li><strong>点圆钮展开面板</strong><span>或按 <code>Alt + S</code>；<code>Esc</code> 收起。挑好资源后预览、复制或下载。</span></li>
+  </ol>
+
+  <footer>
+    <a href="https://github.com/songdongze/media-sniffer">GitHub 仓库</a>
+    <a href="https://github.com/songdongze/media-sniffer/blob/main/README.md">使用文档</a>
+    <a href="https://github.com/songdongze/media-sniffer/issues">问题反馈</a>
+    <p style="margin-top:12px">MIT © 2026 songdongze · 仅用于下载你有权保存的内容，请尊重版权与网站条款</p>
+  </footer>
+
+</div>
+</body>
+</html>
